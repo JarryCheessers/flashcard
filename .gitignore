@@ -1,0 +1,29 @@
+# Root ignore rules (app is a Vite project)
+
+# Dependencies
+**/node_modules/
+
+# Build output
+**/dist/
+**/dist-ssr/
+
+# Local env / runtime
+**/*.local
+**/.env
+**/.env.*
+
+# Logs
+**/logs/
+**/*.log
+
+# Editor / OS
+**/.vscode/*
+!**/.vscode/extensions.json
+**/.idea/
+**/.DS_Store
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw?
+
