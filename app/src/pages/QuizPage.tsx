@@ -1,29 +1,24 @@
-import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { flashcards, type FlashcardCategory } from "../data/flashcards";
-
-const categoryLabels: Record<FlashcardCategory, string> = {
-  animals: "Animals",
-  food: "Food",
-  verbs: "Verbs",
-};
+import {
+  categoryLabels,
+  getCardsByCategory,
+  isFlashcardCategory,
+} from "../data/flashcards";
 
 export function QuizPage() {
   const [params] = useSearchParams();
-  const categoryParam = params.get("category") as FlashcardCategory | null;
+  const rawCategory = params.get("category");
+  const categoryParam = isFlashcardCategory(rawCategory) ? rawCategory : null;
 
-  const count = useMemo(() => {
-    if (!categoryParam) return null;
-    return flashcards.filter((c) => c.category === categoryParam).length;
-  }, [categoryParam]);
+  const count = categoryParam ? getCardsByCategory(categoryParam).length : null;
 
   return (
     <section>
       <h2>Quiz Mode</h2>
       {categoryParam ? (
         <p className="muted">
-          Category: <strong>{categoryLabels[categoryParam] ?? categoryParam}</strong>
-          {typeof count === "number" ? ` (${count} cards)` : null}
+          Category: <strong>{categoryLabels[categoryParam]}</strong>
+          {count !== null ? ` (${count} cards)` : null}
         </p>
       ) : (
         <p className="muted">No category selected yet.</p>
@@ -35,4 +30,3 @@ export function QuizPage() {
     </section>
   );
 }
-

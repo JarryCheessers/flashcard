@@ -13,6 +13,20 @@ export interface Flashcard {
   };
 }
 
+export const categoryLabels: Record<FlashcardCategory, string> = {
+  animals: "Animals",
+  food: "Food",
+  verbs: "Verbs",
+};
+
+const validCategories = new Set<string>(Object.keys(categoryLabels));
+
+export function isFlashcardCategory(
+  value: string | null,
+): value is FlashcardCategory {
+  return value !== null && validCategories.has(value);
+}
+
 export const flashcards: Flashcard[] = [
   {
     id: "animals-cat",
@@ -74,3 +88,15 @@ export const flashcards: Flashcard[] = [
   },
 ];
 
+export function getCategories(): FlashcardCategory[] {
+  const set = new Set<FlashcardCategory>();
+  for (const card of flashcards) set.add(card.category);
+  return Array.from(set).sort();
+}
+
+export function getCardsByCategory(
+  category: FlashcardCategory | null,
+): Flashcard[] {
+  if (!category) return flashcards;
+  return flashcards.filter((c) => c.category === category);
+}

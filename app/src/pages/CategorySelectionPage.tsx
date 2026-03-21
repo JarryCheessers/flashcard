@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { flashcards, type FlashcardCategory } from "../data/flashcards";
+import { categoryLabels, getCategories } from "../data/flashcards";
+import type { FlashcardCategory } from "../data/flashcards";
 
 type Mode = "study" | "quiz";
 
@@ -8,23 +9,13 @@ function isMode(value: string | undefined): value is Mode {
   return value === "study" || value === "quiz";
 }
 
-const categoryLabels: Record<FlashcardCategory, string> = {
-  animals: "Animals",
-  food: "Food",
-  verbs: "Verbs",
-};
-
 export function CategorySelectionPage() {
   const params = useParams();
   const navigate = useNavigate();
 
   const mode = isMode(params.mode) ? params.mode : "study";
 
-  const categories = useMemo(() => {
-    const set = new Set<FlashcardCategory>();
-    for (const card of flashcards) set.add(card.category);
-    return Array.from(set).sort();
-  }, []);
+  const categories = getCategories();
 
   const [selected, setSelected] = useState<FlashcardCategory | null>(null);
 
@@ -51,7 +42,9 @@ export function CategorySelectionPage() {
               className={`select-card ${active ? "active" : ""}`}
               onClick={() => setSelected(category)}
             >
-              <div className="select-card-title">{categoryLabels[category]}</div>
+              <div className="select-card-title">
+                {categoryLabels[category]}
+              </div>
               <div className="select-card-subtitle">{category}</div>
             </button>
           );
@@ -71,4 +64,3 @@ export function CategorySelectionPage() {
     </section>
   );
 }
-

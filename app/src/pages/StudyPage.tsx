@@ -1,22 +1,21 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { flashcards, type FlashcardCategory } from "../data/flashcards";
+import {
+  categoryLabels,
+  getCardsByCategory,
+  isFlashcardCategory,
+} from "../data/flashcards";
 import { Flashcard } from "../components/Flashcard";
-
-const categoryLabels: Record<FlashcardCategory, string> = {
-  animals: "Animals",
-  food: "Food",
-  verbs: "Verbs",
-};
 
 export function StudyPage() {
   const [params] = useSearchParams();
-  const categoryParam = params.get("category") as FlashcardCategory | null;
+  const rawCategory = params.get("category");
+  const categoryParam = isFlashcardCategory(rawCategory) ? rawCategory : null;
 
-  const deck = useMemo(() => {
-    if (!categoryParam) return flashcards;
-    return flashcards.filter((c) => c.category === categoryParam);
-  }, [categoryParam]);
+  const deck = useMemo(
+    () => getCardsByCategory(categoryParam),
+    [categoryParam],
+  );
 
   const [index, setIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -34,7 +33,7 @@ export function StudyPage() {
       <h2>Study Mode</h2>
       {categoryParam ? (
         <p className="muted">
-          Category: <strong>{categoryLabels[categoryParam] ?? categoryParam}</strong>
+          Category: <strong>{categoryLabels[categoryParam]}</strong>
           {` (${count} cards)`}
         </p>
       ) : (
@@ -58,10 +57,18 @@ export function StudyPage() {
 
           {isFlipped ? (
             <div className="actions">
-              <button type="button" className="primary primary-green" onClick={goNext}>
+              <button
+                type="button"
+                className="primary primary-green"
+                onClick={goNext}
+              >
                 I got it right
               </button>
-              <button type="button" className="primary primary-red" onClick={goNext}>
+              <button
+                type="button"
+                className="primary primary-red"
+                onClick={goNext}
+              >
                 I got it wrong
               </button>
             </div>
@@ -87,4 +94,3 @@ export function StudyPage() {
     </section>
   );
 }
-
