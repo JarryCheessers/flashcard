@@ -38,7 +38,7 @@ Here’s a **clean, phased TODO checklist** (easy → hard), with **acceptance c
 
 ## 🟢 Phase 2: Core UI Pages
 
-### ☐ Build Home Page
+### ☑ Build Home Page
 
 **Acceptance Criteria:**
 
@@ -47,7 +47,7 @@ Here’s a **clean, phased TODO checklist** (easy → hard), with **acceptance c
 
 ---
 
-### ☐ Build Category Selection Page
+### ☑ Build Category Selection Page
 
 **Acceptance Criteria:**
 
@@ -59,7 +59,7 @@ Here’s a **clean, phased TODO checklist** (easy → hard), with **acceptance c
 
 ## 🟡 Phase 3: Study Mode (Core Feature)
 
-### ☐ Create Flashcard Component
+### ☑ Create Flashcard Component
 
 **Acceptance Criteria:**
 
@@ -69,7 +69,7 @@ Here’s a **clean, phased TODO checklist** (easy → hard), with **acceptance c
 
 ---
 
-### ☐ Add “Right” and “Wrong” Buttons
+### ☑ Add “Right” and “Wrong” Buttons
 
 **Acceptance Criteria:**
 

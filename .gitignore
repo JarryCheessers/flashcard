@@ -27,3 +27,7 @@
 **/*.sln
 **/*.sw?
 
+# Playwright artifacts
+**/playwright-report/
+**/test-results/
+
